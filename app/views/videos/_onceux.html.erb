@@ -1,0 +1,28 @@
+ <video id="video_1"
+	data-account="1752604059001"
+	data-player="5df7789d-df7d-4605-a677-952771f8e46b"
+	data-embed="default"
+	data-video-id="4029697544001 "
+	class="video-js" 
+	width="560" height="315" 
+	poster="<%=@video.image_url%>"
+	controls></video>
+    
+
+    <script src="//players.brightcove.net/1752604059001/5df7789d-df7d-4605-a677-952771f8e46b_default/index.min.js"></script>
+ 
+    <script src="//players.brightcove.net/videojs-onceux/videojs-onceux.min.js"></script>
+  
+    <!-- custom script -->
+    <script type="text/JavaScript">
+	var myPlayer,
+            options = {
+              "metadataUri" : "<%=@video.once_id%>"
+            };
+			
+        videojs("video_1").ready(function(){
+            myPlayer = this;
+            myPlayer.onceux(options);
+        });
+    
+    </script>

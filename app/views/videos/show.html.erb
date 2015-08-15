@@ -1,0 +1,29 @@
+
+Volume ID = <%=@video.volume_id%> | CurrentUser: <%=@user_now.email%> | Created B <%=@user_stored.email%>
+
+
+ |<br>
+<% @assets.each do |assets|%>
+	<%type = assets["type"]%>
+	<%code = assets["embed_code"]%>
+	<%if type == "YoutubeAsset"%>
+		<p><iframe width="560" height="315" src="https://www.youtube.com/embed/<%=code%>" frameborder="0" allowfullscreen></iframe></p>
+	<%end%>
+	<%if type == "OoyalaAsset"%>
+		<iframe  id="Iframe" width="560" height="315" src="https://player.ooyala.com/iframe.html?ec=<%=code%>&pbid=39dee535ed704c4bacc94c912f0a5a23" frameborder="0"></iframe></p>
+	<%end%>
+	<%if type == "BrightcoveAsset"%>
+		<%=@video.once_id = code%><br>
+		<%= render "videos/onceux"%><br>
+		HLS: <%=get_hls(code)%><br>
+	<%end%>
+<%end%>
+
+</br>
+
+
+
+
+
+
+

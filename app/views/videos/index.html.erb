@@ -1,0 +1,28 @@
+
+<h1>Test Video Queue</h1>
+
+<table>
+  <tr>
+  	<th>ID</th>
+    <th>Provider</th>
+    <th>Title</th>
+    <th>Volume ID</th>
+   
+  </tr>
+<%@videos.each do |video| %>
+  <tr>
+    <td><%=video.id%></td>
+    <td><%= video.hash['provider']['code'] %></td>
+    <td><%=video.hash["title_short"]%></td>
+     <td><%=link_to video.volume_id, volume_url(video.volume_id)%></td>
+    <td><%= link_to 'Show', video %></td>
+    <td><%= link_to 'Edit', edit_video_path(video) %></td>
+    <td><%= link_to 'Destroy', video, :confirm => 'Are you sure?',
+            :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New video', new_video_path %>
