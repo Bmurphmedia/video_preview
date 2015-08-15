@@ -28,6 +28,7 @@ gem 'devise'
 gem 'pg'
 gem "rails_12factor"
 gem 'responders'
+gem 'puma'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
