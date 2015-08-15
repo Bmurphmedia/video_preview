@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'faraday'
 gem 'devise'
 gem 'pg'
+gem "rails_12factor"
 gem 'responders'
 
 # Use ActiveModel has_secure_password
