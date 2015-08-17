@@ -1,25 +1,32 @@
+<h2><%=@video.volume_hash['title_short']%></h2>
 
-Volume ID = <%=@video.volume_id%> | CurrentUser: <%=@user_now.email%> | Created B <%=@user_stored.email%>
+Volume ID = <%=@video.volume_id%> | CurrentUser: <%=@user_now.email%> | Created By <%=@user_stored.email%>
 
 
- |<br>
-<% @assets.each do |assets|%>
+<ul class="list-group">
+<% @video.volume_hash["video_assets"].each do |assets|%>
 	<%type = assets["type"]%>
 	<%code = assets["embed_code"]%>
 	<%if type == "YoutubeAsset"%>
-		<p><iframe width="560" height="315" src="https://www.youtube.com/embed/<%=code%>" frameborder="0" allowfullscreen></iframe></p>
+		<%@video.youtube_id = code%>
+		 <li class="list-group-item">
+		 <h3>Youtube</h3>
+		<%= render "videos/youtube"%></li>
 	<%end%>
 	<%if type == "OoyalaAsset"%>
-		<iframe  id="Iframe" width="560" height="315" src="https://player.ooyala.com/iframe.html?ec=<%=code%>&pbid=39dee535ed704c4bacc94c912f0a5a23" frameborder="0"></iframe></p>
+		<%@video.ooyala_id = code%>
+		<li class="list-group-item">
+		<h3>Ooyala</h3>
+		<%= render "videos/ooyala"%></li>
 	<%end%>
 	<%if type == "BrightcoveAsset"%>
-		<%=@video.once_id = code%><br>
-		<%= render "videos/onceux"%><br>
-		HLS: <%=get_hls(code)%><br>
+		<%@video.once_id = code%><br>
+		<li class="list-group-item">
+		<h3>Brightcove</h3>
+		<%= render "videos/onceux"%></li>
 	<%end%>
 <%end%>
-
-</br>
+</ul>
 
 
 

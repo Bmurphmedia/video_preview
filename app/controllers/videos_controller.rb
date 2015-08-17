@@ -4,7 +4,7 @@ class VideosController < ApplicationController
 		@videos = Video.all
 
 		@videos.each do |video|
-			 video.hash = get_hash(video.volume_id)
+			 video.volume_hash = get_volume_hash(video.volume_id)
 		end
 
 	end
@@ -12,9 +12,10 @@ class VideosController < ApplicationController
 	def show
 		@video = Video.find(params[:id])
 		#for getting the current user, if needed
+		@video.volume_hash = get_volume_hash(@video.volume_id)
 		@user_now = User.find(current_user)
 		@user_stored = User.find(@video.user_id)
-		@assets = get_assets(@video.volume_id)
+		
 	end
 
 	def new
@@ -60,27 +61,7 @@ class VideosController < ApplicationController
 
 	
 
-	def get_assets(id)	
-		conn = Faraday.new(:url => 'http://volume.voxmedia.com/api/videos') do |faraday|
-		  faraday.request  :url_encoded             # form-encode POST params
-		  faraday.response :logger                  # log requests to STDOUT
-		  faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
-		end
-
-		response = conn.get id
-		hash = ActiveSupport::JSON.decode(response.body)
-		title = hash["title_short"]
-		assets_array = hash["video_assets"]
-		return assets_array
-		# assets_array.each do |asset|
-		# 	assets_hash = {:type => asset[:]}
-		# end
-
-	end
-
-
-
- def get_hash(id)
+ def get_volume_hash(id)
 
 	conn = Faraday.new(:url => 'http://volume.voxmedia.com/api/videos') do |faraday|
 		  faraday.request  :url_encoded             # form-encode POST params

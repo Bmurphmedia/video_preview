@@ -3,7 +3,7 @@ class Video < ActiveRecord::Base
 	belongs_to :user
 	validates :user, presence: true
 
-	attr_accessor :hash
+	attr_accessor :volume_hash, :youtube_id, :ooyala_id
 
 
 end

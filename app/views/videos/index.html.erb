@@ -1,7 +1,8 @@
 
 <h1>Test Video Queue</h1>
 
-<table>
+<div class="table-responsive">
+<table class="table table-hover">
   <tr>
   	<th>ID</th>
     <th>Provider</th>
@@ -12,8 +13,8 @@
 <%@videos.each do |video| %>
   <tr>
     <td><%=video.id%></td>
-    <td><%= video.hash['provider']['code'] %></td>
-    <td><%=video.hash["title_short"]%></td>
+    <td><%= video.volume_hash['provider']['code'] %></td>
+    <td><%=video.volume_hash["title_short"]%></td>
      <td><%=link_to video.volume_id, volume_url(video.volume_id)%></td>
     <td><%= link_to 'Show', video %></td>
     <td><%= link_to 'Edit', edit_video_path(video) %></td>
@@ -22,7 +23,7 @@
   </tr>
 <% end %>
 </table>
+</div>
 
-<br />
 
 <%= link_to 'New video', new_video_path %>
