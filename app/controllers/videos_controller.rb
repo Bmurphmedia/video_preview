@@ -39,9 +39,16 @@ class VideosController < ApplicationController
 
 	def edit
 		@video = Video.find(params[:id])
+		
 	end
 
 	def update
+		@video = Video.find(params[:id])
+		if @video.update_attributes(video_params)
+			redirect_to videos_path
+		else
+			render :new
+		end
 	end
 
 	def destroy
