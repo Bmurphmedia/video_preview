@@ -29,13 +29,21 @@ class VideosController < ApplicationController
 		@user = User.find(current_user)
 		#save the user ID in the instance
 		@video.user_id = @user.id
-
-		if @video.save
-			redirect_to videos_path(:id)
+		
+		if get_volume_hash(@video.volume_id) != "error"		
+			if @video.save
+				flash[:success] = "Video Created!"
+				redirect_to videos_path(:id)
+			else
+				flash[:error] = "Something weird happened"
+				render :new
+			end
 		else
+			flash[:error] = "Invalid Volume ID, try again"
 			render :new
 		end
 	end
+	
 
 	def edit
 		@video = Video.find(params[:id])
@@ -67,10 +75,9 @@ class VideosController < ApplicationController
 	end
 
 	
+	def get_volume_hash(id)
 
- def get_volume_hash(id)
-
-	conn = Faraday.new(:url => 'http://volume.voxmedia.com/api/videos') do |faraday|
+		conn = Faraday.new(:url => 'http://volume.voxmedia.com/api/videos') do |faraday|
 		  faraday.request  :url_encoded             # form-encode POST params
 		  faraday.response :logger                  # log requests to STDOUT
 		  faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
@@ -78,6 +85,8 @@ class VideosController < ApplicationController
 
 		response = conn.get id
 		hash = ActiveSupport::JSON.decode(response.body)
+		rescue 
+			return "error"
 		return hash
 	end
 

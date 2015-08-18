@@ -10,7 +10,7 @@
 
 
 <p class="notice"><%= notice %></p>
- <p class="alert"><%= alert %></p>
+<p class="alert"><%= alert %></p>
 
 <%= nav_bar responsive: true, brand:"VideoPreview", brand_link: videos_path do %>
     <%= menu_group do %>
@@ -31,7 +31,10 @@
 <% end %>
 
 	<div class = "container-fluid">
-	<%= yield %>
+    <% flash.each do |key, value| %>
+    <div class="alert" alert-"<%= key %>"><%= value %></div>
+    <% end %>
+	 <%= yield %>
 	</div>
 </div>
 
