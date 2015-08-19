@@ -51,11 +51,20 @@ class VideosController < ApplicationController
 	end
 
 	def update
+
 		@video = Video.find(params[:id])
-		if @video.update_attributes(video_params)
-			redirect_to videos_path
+		@video_check = Video.new(video_params)
+		if get_volume_hash(@video_check.volume_id) != "error"
+			if @video.update_attributes(video_params)
+				flash[:success] = "Video Created!"
+				redirect_to videos_path
+			else
+				render :new
+			end
 		else
-			render :new
+			flash[:error] = "Invalid Volume ID, try again"
+			render :edit
+
 		end
 	end
 
