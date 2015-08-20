@@ -36,6 +36,8 @@ gem "rails_12factor"
 gem 'responders'
 gem 'puma'
 
+gem 'simple_form'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
