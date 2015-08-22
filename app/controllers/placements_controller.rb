@@ -3,6 +3,7 @@ class PlacementsController < ApplicationController
 
 	def show
 		@disable_nav = true
+		@disable_container = true
 		@placement = Placement.find(params[:id])
 		@embed_codes = {}
 		

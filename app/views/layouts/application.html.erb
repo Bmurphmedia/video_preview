@@ -9,10 +9,7 @@
 <body>
 
   <div class = "container">
-    
-
     <!-- Nav Bar -->
-    
     <%= render 'layouts/navbar' unless @disable_nav %>
     <!-- end nav bar -->
 
@@ -29,12 +26,18 @@
               <div class="alert" alert-"<%= key %>"><%= value %></div>
           <% end %>
       
-
-          <%= yield %>
+          <!-- yield goes within a container unless disabled -->
+          <%unless @disable_container%>
+            <%= yield %>
+          <%end%>
         </div>
-
     </div>
   </div>
+  <!-- yield goes outside of container if container disabled, for full window iframe -->
+  <%if @disable_container%>
+    <%= yield %>
+  <%end%>
+  
 
 </body>
 </html>
