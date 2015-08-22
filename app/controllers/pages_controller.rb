@@ -28,14 +28,22 @@ class PagesController < ApplicationController
 
 
 	def show
+		#Assign the specificed instance of page to an instance variable
 		@page = Page.find(params[:id])
+		#Assign all the instences of placements that relate to page to an instance variable
 		@placements = @page.placements
+		#Initiliaze and array to hold data for each video specified in the placement
 		@video_placements = []
 
+		#initialize a counter variable
 		count = 0
+		#iterate through placements to to fill @video_placements up with the information needed for the view
 		@placements.each do |placement|
+			#Lookup the video that relates to this placement
 			video = Video.find(placement.video_id)
-			@video_placements[count] = {placement_id: placement.id, video_id: placement.video_id, option: placement.option, video_data: get_volume_hash(video.volume_id)}
+			#add a data hash to this array that includes data from the video model and the related data from the API
+			@video_placements[count] = {placement_id: placement.id, video_id: placement.video_id, option: placement.option, image_url: video.image_url, video_data: get_volume_hash(video.volume_id)}
+			#increment count
 			count = count+1
 		end
 

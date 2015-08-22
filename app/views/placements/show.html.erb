@@ -1,0 +1,29 @@
+
+<div class="container-fluid">
+	<!-- Placement <%=@placement.id%></br>
+	Option <%=@placement.option%></br>
+
+	Video: <%=@video.volume_hash.to_s%>
+	<hr>
+	<%=@video.volume_hash["video_assets"].class%>
+	<hr>
+	<%=@embed_codes.to_s%>
+	 -->
+	
+
+	<%if @placement.option == 1 %>
+		<%@video.once_id = @embed_codes["BrightcoveAsset"]%>
+		<%= render "videos/onceux"%>
+	<%end%>
+
+
+	<%if @placement.option == 2 %>
+		<%@video.youtube_id = @embed_codes["YoutubeAsset"]%>
+		<%= render "videos/youtube"%>
+	<%end%>
+
+	<%if @placement.option == 3 %>
+		<%@video.ooyala_id = @embed_codes["OoyalaAsset"]%>
+		<%= render "videos/ooyala"%>
+	<%end%>
+</div>

@@ -13,36 +13,7 @@
 
     <!-- Nav Bar -->
     
-    <div class="row">
-      <nav class="navbar navbar-default">
-       
-        <div class='col-md-2'>
-          <p class="navbar-text">Video Preview</p>
-        </div>
-        
-          <%if current_user%>
-           <div class='col-md-3'>
-            <p class="navbar-text">Signed in as: @user_now.email</p> 
-          <%end%>
-        </div>
-        <div class='col-md-1'>
-         <%= link_to "Videos", videos_path, class: "btn btn-small btn-success" %>
-        </div>
-         <div class='col-md-1'>
-         <%= link_to "Pages", pages_path, class: "btn btn-small btn-success" %>
-        </div>
-    
-        <div class='col-md-4'>
-
-          <% if current_user %>
-            <%= link_to "Sign Out", destroy_user_session_path, :method => :delete, class: "btn btn-small btn-success" %>
-          <%else%>
-            <%= link_to "Sign In", new_user_session_path, class: "btn btn-small btn-success" %>
-          <%end%>
-         </div> 
-
-      </nav>
-    </div>
+    <%= render 'layouts/navbar' unless @disable_nav %>
     <!-- end nav bar -->
 
   </div>
