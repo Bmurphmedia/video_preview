@@ -2,7 +2,7 @@
 <h1>Test Video Queue</h1>
 
 <div class="table-responsive">
-<table class="table table-hover">
+<table class="table table-hover table-bordered">
   <tr>
   	<th>ID</th>
     <th>Provider</th>
@@ -14,9 +14,8 @@
   <tr>
     <td><%=video.id%></td>
     <td><%= video.volume_hash['provider']['code'] %></td>
-    <td><%=video.volume_hash["title_short"]%></td>
+    <td><%=link_to video.volume_hash["title_short"], video%></td>
      <td><%=link_to video.volume_id, volume_url(video.volume_id)%></td>
-    <td><%= link_to 'Show', video %></td>
     <td><%= link_to 'Edit', edit_video_path(video) %></td>
     <td><%= link_to 'Destroy', video, :confirm => 'Are you sure?',
             :method => :delete %></td>

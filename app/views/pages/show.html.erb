@@ -1,7 +1,11 @@
 <%=@page.title%></br>
-<%=@placements.first.option%></br>
-<%=@videos[@placements.first.video_id].volume_url%>
 
+<%if @placements %>
+	<%@placements.each do |p|%>
+		<%=p.option%> | <%=p.video_id%></br>
+		
+	<%end%>
+<%end%>
 
 
 </br>

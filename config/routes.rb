@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       }
 
   resources :videos
+  resources :pages
   resources :pages do
     resources :placements
   end
