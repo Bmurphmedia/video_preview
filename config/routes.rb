@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
  # devise_for :users
   
-  root 'videos#index'
+  root 'welcome#index'
   get 'users' => 'users#index'
   devise_for :users, controllers: {
         sessions: 'users/sessions'

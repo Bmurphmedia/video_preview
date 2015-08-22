@@ -11,29 +11,8 @@
   <div class = "container">
     
 
-    <!-- Nav Bar1 -->
-    <!--  
-
-    <div class = "row">
-      <%= nav_bar responsive: true, brand:"VideoPreview", brand_link: videos_path do %>
-          <%= menu_group do %>
-              <%= menu_item "Videos", videos_path %>
-          <% end %>
-          <% if current_user %>
-              <%= menu_item "Log Out", destroy_user_session_path, :method => :delete %>
-          <% else %>
-              <%= menu_group pull: :right do %>
-                  <%= menu_item "Sign Up", new_user_registration_path %>
-                  <%= form_for @user, url: session_path(:user) do |f| -%>
-                    <p><%= f.text_field :email %></p>
-                    <p><%= f.password_field :password %></p>
-                    <p><%= f.submit "Sign in" %></p>
-                  <% end -%>
-              <% end %>
-          <% end %>
-      <% end %>
-     </div>-->
-    <!-- end nav bar 1 -->
+    <!-- Nav Bar -->
+    
     <div class="row">
       <nav class="navbar navbar-default">
        
@@ -54,7 +33,7 @@
          </div> 
       </nav>
     </div>
-
+    <!-- end nav bar -->
 
   </div>
 
