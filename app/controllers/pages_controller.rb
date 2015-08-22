@@ -30,13 +30,13 @@ class PagesController < ApplicationController
 	def show
 		@page = Page.find(params[:id])
 		@placements = @page.placements
-		
-		#starting out with making all videos available, 
-		#but should limit to videos that relate to placements
-		@videos= Video.all
+		@video_placements = []
 
-		@videos.each do |video|
-			 video.volume_hash = video.get_volume_hash(video.volume_id)
+		count = 0
+		@placements.each do |placement|
+			video = Video.find(placement.video_id)
+			@video_placements[count] = {placement_id: placement.id, video_id: placement.video_id, option: placement.option, video_data: get_volume_hash(video.volume_id)}
+			count = count+1
 		end
 
 
@@ -48,6 +48,20 @@ class PagesController < ApplicationController
 	def page_params
 		params.require(:page).permit(:title, :description)
 
+	end
+	def get_volume_hash(id)
+
+		conn = Faraday.new(:url => 'http://volume.voxmedia.com/api/videos') do |faraday|
+		  faraday.request  :url_encoded             # form-encode POST params
+		  faraday.response :logger                  # log requests to STDOUT
+		  faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
+		end
+
+		response = conn.get id
+		hash = ActiveSupport::JSON.decode(response.body)
+		rescue 
+			return "error"
+		return hash
 	end
 
 

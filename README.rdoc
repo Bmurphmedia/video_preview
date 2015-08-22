@@ -7,4 +7,4 @@
 3. bundle exec db:migrate
 
 ----
-This let's you setup demo pages with Volume videos.
+This lets you setup demo pages with Volume videos.

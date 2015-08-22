@@ -1,10 +1,19 @@
 <%=@page.title%></br>
 
-<%if @placements %>
+<%if @placements.count > 0 %>
 	<%@placements.each do |p|%>
 		<%=p.option%> | <%=p.video_id%></br>
 		
 	<%end%>
+
+
+	<%@video_placements.each do |placement|%>
+
+	PlacementID <%=placement[:placement_id]%> | VideoID:<%=placement[:video_id]%> | Option:<%=placement[:option]%></br>
+	Video data: <%=placement[:video_data].class%><%=placement[:video_data].to_s%></br>
+
+	<%end%>
+
 <%end%>
 
 
