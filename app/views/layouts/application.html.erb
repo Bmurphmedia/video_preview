@@ -8,35 +8,73 @@
 </head>
 <body>
 
+  <div class = "container">
+    
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+    <!-- Nav Bar1 -->
+    <!--  
 
-<%= nav_bar responsive: true, brand:"VideoPreview", brand_link: videos_path do %>
-    <%= menu_group do %>
-        <%= menu_item "Videos", videos_path %>
-    <% end %>
-    <% if current_user %>
-        <%= menu_item "Log Out", destroy_user_session_path, :method => :delete %>
-    <% else %>
-        <%= menu_group pull: :right do %>
-            <%= menu_item "Sign Up", new_user_registration_path %>
-            <%= form_for @user, url: session_path(:user) do |f| -%>
-              <p><%= f.text_field :email %></p>
-              <p><%= f.password_field :password %></p>
-              <p><%= f.submit "Sign in" %></p>
-            <% end -%>
-        <% end %>
-    <% end %>
-<% end %>
+    <div class = "row">
+      <%= nav_bar responsive: true, brand:"VideoPreview", brand_link: videos_path do %>
+          <%= menu_group do %>
+              <%= menu_item "Videos", videos_path %>
+          <% end %>
+          <% if current_user %>
+              <%= menu_item "Log Out", destroy_user_session_path, :method => :delete %>
+          <% else %>
+              <%= menu_group pull: :right do %>
+                  <%= menu_item "Sign Up", new_user_registration_path %>
+                  <%= form_for @user, url: session_path(:user) do |f| -%>
+                    <p><%= f.text_field :email %></p>
+                    <p><%= f.password_field :password %></p>
+                    <p><%= f.submit "Sign in" %></p>
+                  <% end -%>
+              <% end %>
+          <% end %>
+      <% end %>
+     </div>-->
+    <!-- end nav bar 1 -->
+    <div class="row">
+      <nav class="navbar navbar-default">
+       
+        <div class='col-md-2'>
+          <p class="navbar-text">Video Preview</p>
+        </div>
+        <div class='col-md-1'>
+         <%= link_to "Videos", videos_path, class: "btn btn-small btn-success" %>
+        </div>
+    
+        <div class='col-md-3'>
 
-	<div class = "container-fluid">
-    <% flash.each do |key, value| %>
-    <div class="alert" alert-"<%= key %>"><%= value %></div>
-    <% end %>
-	 <%= yield %>
-	</div>
-</div>
+          <% if current_user %>
+            <%= link_to "Sign Out", destroy_user_session_path, :method => :delete, class: "btn btn-small btn-success" %>
+          <%else%>
+            <%= link_to "Sign In", new_user_session_path, class: "btn btn-small btn-success" %>
+          <%end%>
+         </div> 
+      </nav>
+    </div>
+
+
+  </div>
+
+    <!-- Fixed container for flash messages and yield -->
+    <div class="container">
+      <div class = "row">
+        
+     
+
+        <div class="col-md-10">
+          <% flash.each do |key, value| %>
+              <div class="alert" alert-"<%= key %>"><%= value %></div>
+          <% end %>
+      
+
+          <%= yield %>
+        </div>
+
+    </div>
+  </div>
 
 </body>
 </html>

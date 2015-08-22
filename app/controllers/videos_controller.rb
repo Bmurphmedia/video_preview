@@ -56,7 +56,7 @@ class VideosController < ApplicationController
 		@video_check = Video.new(video_params)
 		if get_volume_hash(@video_check.volume_id) != "error"
 			if @video.update_attributes(video_params)
-				flash[:success] = "Video Created!"
+				flash[:success] = "Video Updated!"
 				redirect_to videos_path
 			else
 				render :new

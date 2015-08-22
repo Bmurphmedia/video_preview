@@ -71,4 +71,7 @@ ActiveRecord::Schema.define(version: 20150813001413) do
 
   add_index "videos", ["user_id"], name: "index_videos_on_user_id", using: :btree
 
+  add_foreign_key "placements", "pages"
+  add_foreign_key "placements", "videos"
+  add_foreign_key "videos", "users"
 end
