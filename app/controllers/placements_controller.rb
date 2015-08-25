@@ -1,6 +1,32 @@
 class PlacementsController < ApplicationController
 
 
+	def new
+		@page = Page.find(params[:page_id])
+
+		@placement = @page.placements.new
+	end
+
+
+	def create
+		placement_params = params.require(:placement).permit(:video_id, :option)
+		@page = Page.find(params[:page_id])
+
+		@placement = @page.placements.new(placement_params)
+
+		if @placement.save
+			redirect_to page_path(@placement.page_id), flash: {success: "Placement Added"}
+		else
+			render :new
+		end
+
+	end
+
+
+
+
+
+
 	def show
 		@disable_nav = true
 		@disable_container = true
