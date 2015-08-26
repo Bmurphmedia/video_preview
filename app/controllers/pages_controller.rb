@@ -11,9 +11,13 @@ class PagesController < ApplicationController
 
 		@page = Page.new(page_params)
 		#get the current user
-		@user = User.find(current_user)
+		
+
+
+		#@user = 1
+		#@user = User.find(current_user)
 		#save the user ID in the instance
-		@page.user_id = @user.id
+		#@page.user_id = @user.id
 
 		if @page.save
 				flash[:success] = "page Created!"
