@@ -1,6 +1,6 @@
 module VideosHelper
 	def volume_url(volume_id)
-		"http://https://volume.voxmedia.com/admin/videos/#{volume_id}" 
+		"https://volume.voxmedia.com/admin/videos/#{volume_id}" 
 	end
 	#takes the onceux vmap url as an argument
 	def get_hls(url)
