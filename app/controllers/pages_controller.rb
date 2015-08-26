@@ -21,7 +21,7 @@ class PagesController < ApplicationController
 
 		if @page.save
 				flash[:success] = "page Created!"
-				redirect_to page_path(:id)
+				redirect_to pages_path
 			else
 				flash[:error] = "Something weird happened"
 				render :new
