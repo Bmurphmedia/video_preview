@@ -13,7 +13,7 @@ class PagesController < ApplicationController
 		#get the current user
 		
 
-
+		#This code is for when I can change the user ID foreign key column to an integer
 		#@user = 1
 		#@user = User.find(current_user)
 		#save the user ID in the instance
@@ -21,7 +21,7 @@ class PagesController < ApplicationController
 
 		if @page.save
 				flash[:success] = "page Created!"
-				redirect_to pages_path(:id)
+				redirect_to page_path(:id)
 			else
 				flash[:error] = "Something weird happened"
 				render :new
@@ -54,6 +54,19 @@ class PagesController < ApplicationController
 
 	end
 
+	def edit
+		@page = Page.find(params[:id])
+	end
+
+	def update 
+		@page = Page.find(params[:id])
+		if @page.update_attributes(page_params)
+				flash[:success] = "Page Updated!"
+				redirect_to pages_path
+			else
+				render :new
+		end
+	end
 
 
 
