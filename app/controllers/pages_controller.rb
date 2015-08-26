@@ -69,7 +69,7 @@ class PagesController < ApplicationController
 	end
 
 	def destroy
-			@page = page.find(params[:id])
+			@page = Page.find(params[:id])
 			@page.destroy
 
 			respond_to do |format|
