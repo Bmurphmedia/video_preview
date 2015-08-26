@@ -68,6 +68,15 @@ class PagesController < ApplicationController
 		end
 	end
 
+	def destroy
+			@page = page.find(params[:id])
+			@page.destroy
+
+			respond_to do |format|
+				format.html { redirect_to(pages_url)}
+			end
+			
+		end
 
 
 	def page_params

@@ -50,7 +50,16 @@ class PlacementsController < ApplicationController
 	end
 
 
+	def destroy
+		@placement = Placement.find(params[:id])
+		@placement.destroy
+		redirect_to page_path(@placement.page_id.to_i)
 
+		# respond_to do |format|
+		# 	format.html { redirect_to(pages_url)}
+		# end
+	
+	end
 
 
 

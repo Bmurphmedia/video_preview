@@ -1,9 +1,27 @@
-<%= link_to "Add Placement", new_page_placement_path(@page), class: "btn btn-small btn-success" %><br>
-<%=@page.title%></br>
+<h1><%=@page.title%></h1>
+<%= link_to "+ Placement", new_page_placement_path(@page), class: "btn btn-small btn-success" %><br>
+
 	
 	<%@placements.each do |placement|%>
-		<div class="embed-responsive embed-responsive-16by9">
-			<iframe class="embed-responsive-item" src="<%=placement_path(placement.id)%>" frameborder="0" allowfullscreen></iframe>
+		<%=placement.id%>
+		<div class="container" >
+			
+			<div class="row">
+				<div class="col-md5">
+
+					<div class="row">
+						<%= link_to 'Destroy', placement_path(placement.id), :confirm => 'Are you sure?',
+            :method => :delete %>
+						
+					</div>
+					<div class="row">
+						<div class="embed-responsive embed-responsive-16by9">
+							<iframe class="embed-responsive-item" src="<%=placement_path(placement.id)%>" frameborder="0" allowfullscreen></iframe>
+						</div>
+					</div>
+				</div>
+
+			</div>
 		</div>
 	<%end%>
 
