@@ -6,28 +6,38 @@
 	 <%= link_to "edit", edit_video_path, class: "btn btn-small btn-success" %>
 
 	<ul class="list-group">
-	<% @video.volume_hash["video_assets"].each do |assets|%>
-		<%type = assets["type"]%>
-		<%code = assets["embed_code"]%>
-		<%if type == "YoutubeAsset"%>
-			<%@video.youtube_id = code%>
-			 <li class="list-group-item">
-			 <h3>Youtube</h3>
-			<%= render "videos/youtube"%></li>
+		<% @video.volume_hash["video_assets"].each do |assets|%>
+			<%type = assets["type"]%>
+			<%code = assets["embed_code"]%>
+			<%if type == "YoutubeAsset"%>
+				<%@video.youtube_id = code%>
+
+				 <li class="list-group-item">
+				 <h3>Youtube</h3>
+				<%= render "videos/youtube"%></li>
+
+
+
+			<%end%>
+			<%if type == "OoyalaAsset"%>
+				<%@video.ooyala_id = code%>
+				
+					<li class="list-group-item">
+						<h3>Ooyala</h3>
+						<%= render "videos/ooyala"%>
+					</li>
+			<%end%>
+			<%if type == "BrightcoveAsset"%>
+				<%@video.once_id = code%>
+		
+					<li class="list-group-item">
+						<h3>Brightcove Once UX</h3>
+						<%= render "videos/onceux"%>
+					</li>
+		
+		
+			<%end%>
 		<%end%>
-		<%if type == "OoyalaAsset"%>
-			<%@video.ooyala_id = code%>
-			<li class="list-group-item">
-			<h3>Ooyala</h3>
-			<%= render "videos/ooyala"%></li>
-		<%end%>
-		<%if type == "BrightcoveAsset"%>
-			<%@video.once_id = code%><br>
-			<li class="list-group-item">
-			<h3>Brightcove</h3>
-			<%= render "videos/onceux"%></li>
-		<%end%>
-	<%end%>
 	</ul>
 
 

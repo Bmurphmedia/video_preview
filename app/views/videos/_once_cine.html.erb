@@ -1,0 +1,174 @@
+<div id="hymnal-container" class="prelude-holder">
+<a id="prelude-click" class="athena-click"></a>
+	<div id="video-wrapper">
+		<video autoplay="autoplay" muted="true" poster="https://www.dropbox.com/s/3dmtb1onzh010qd/transparent.png?dl=1">
+			<source src="<%=get_auto(@video.once_id)%>" type="video/webm">
+
+			<!--  
+			<source src="http://cdn.hymnal.voxmedia.com/ads/slice_of_life/Discover_1400x510_DoubleAnniversary_SliceOfLife_v1_video.webmhd.webm" type="video/webm">
+			<source src="http://cdn.hymnal.voxmedia.com/ads/slice_of_life/Discover_1400x510_DoubleAnniversary_SliceOfLife_v1_video.oggvorbis.ogg" type="video/ogg">
+			<source src="http://cdn.hymnal.voxmedia.com/ads/slice_of_life/Discover_1400x510_DoubleAnniversary_SliceOfLife_v1_video.mp4" type="video/mp4">
+			-->
+
+		</video>
+	</div>
+
+	<div id="prelude-wrapper">
+							
+	</div>
+	
+	<div id="ad-container"> 
+ 
+
+
+
+
+  <script>
+    Hymnal = {
+      ads: []
+    };
+    Hymnal.settings = {
+      adminHost: 'http://hymnal.voxmedia.com',
+      userCanViewMetrics: true,
+    };
+
+    (function(){
+
+  // Check if being served into an iFrame
+  var hymnalInFrame = false;
+  var hymnalCanEscapeFrame = false;
+  var hymnalInDesignPreview = document.location.href.indexOf("designs/preview") > 0;
+
+  try {
+    if(typeof window.frameElement === "object") {
+      hymnalInFrame = true;
+      if(typeof window.frameElement.ownerDocument === "object") {
+        hymnalCanEscapeFrame = true;
+      }
+    }
+  } catch (e){
+    hymnalInFrame = true;
+    hymnalCanEscapeFrame = false;
+  }
+
+  // Get ready to move out of the frame if we need
+  // This requires frame to be from the same origin as the parent document
+  var moveToMainFrame = function(){
+    if(hymnalInFrame && hymnalCanEscapeFrame){
+
+      // Get all the nodes
+      var adNodes = document.body.childNodes;
+
+      // abort everything and move this whole thing to the parent document....
+      var mainContainer = window.frameElement.parentElement;
+
+      // barf, this list mutates as we walk through it :(
+      // walking backwards so the index is still useful
+      var numberOfNodes = adNodes.length;
+      for(var i = numberOfNodes -1; i >=0;  i--){
+        var node = adNodes[i];
+
+        // We need to create script elements, not just move them, to get them evaluated
+        if(node.nodeName === 'SCRIPT'){
+          var scriptNode = window.frameElement.ownerDocument.createElement('script');
+              scriptNode.src = node.src;
+          mainContainer.appendChild(scriptNode);
+          document.body.removeChild(node);
+        } else {
+          mainContainer.appendChild(node);
+        }
+      }
+      // Remove the frame, from the main page
+      frameElement.parentElement.removeChild(window.frameElement.parentElement.querySelector('iframe'));
+    }
+  };
+
+
+  var executeHymnal = function(){
+
+    // If jQuery is not found, load it from our CDN
+    if(!window.jQuery){
+      var script = document.createElement('script');
+      script.type = "text/javascript";
+      script.src = "http://cdn.hymnal.voxmedia.com/libraries/jquery-1.10.2.min.js";
+      document.getElementsByTagName('head')[0].appendChild(script);
+    }
+
+    (function($) {
+        // Include everything in sdk/js/ (as specified in Compilers::Ad)
+        // Defines HymnalLib, the local version of the Hymnal libraries
+        var HymnalLib={version:4};"undefined"==typeof window.Hymnal&&(window.Hymnal=HymnalLib),function(t){t.defaultSettings=t.defaultSettings||{},t.settings?t.settings=$.extend(_.clone(t.defaultSettings),t.settings):t.settings=t.defaultSettings,t.settings=t.settings||{},window.console=window.console||{log:function(){}},t.loggers=t.loggers||{push:function(){}},t.ConsoleLogger=t.ConsoleLogger||function(){},t.ads=t.ads||[],!t.settings.userCanViewMetrics&&$("#network-bar a[title='Network Admin Dashboard']").length>0&&(t.settings.userCanViewMetrics=!0),t.ChorusEvents=t.ChorusEvents||{AdResponseWithHTML:"Vox.Ad.ResponseWithHTML",AdRequest:"Hymnal.requestAd"}}(HymnalLib),function(t){t.util={};t.util.UserAgentProfiler=function(){var t="ontouchstart"in window||window.DocumentTouch&&document instanceof DocumentTouch||navigator.msMaxTouchPoints>0,e=window.innerWidth,n=window.navigator.userAgent,i=t&&728>e||window.location.href.indexOf("mobile=true")>0,s=t&&e>=728,o=!i&&!s,a=i?"mobile":s?"tablet":"desktop",r=!1;if(n.indexOf("Android")>0)for(var l=n.split(";"),h=0,c=l.length;c>h;h++)if(l[h].indexOf("Android")>0){var d=l[h].split(" ");if(parseInt(d[d.length-1].split(".")[0])<3){r=!0;break}}return{screenWidth:function(){return e},profile:function(){return a},isTablet:function(){return s},isMobile:function(){return i},isDesktop:function(){return o},isAndroidLt3:function(){return r}}}(),t.util.inViewport=function(t){var e,n;return t?(t.jquery&&(t=t.get(0)),t&&1===t.nodeType?(n=document.documentElement,e=t.getBoundingClientRect(),!!e&&e.bottom>0&&e.right>0&&e.top<n.clientHeight&&e.left<n.clientWidth):!1):!1}}(HymnalLib),function(t){t.Ad=function(){function e(e){e=e||{},this.type=e.type,this.id=e.id,this.design_template=e.design_template||"",this.brand=e.brand,this.campaignId=e.campaignId,this.slug=e.slug,this.fields=e.fields||{},this.adUnitID=0,this.siteID="",this.network="",this.entryType="",this.adServerVariables={},this.libraryVersion=t.version,this.enable_log=!1,this.data=this.data||{},this._elementToReplace=e.elementToReplace&&$(e.elementToReplace),this._designSetupFunction=e.designSetupFunction,this._element=e.element,this.manual_view_impression=!1,this.manual_chartbeat_setup=!1,this.manual_moat_setup=!0,this.automatic_click_through=!0,this.content={all_html:e.html,all_css:e.css},this.clickThroughUrl=e.clickThroughUrl,this.settings={testMode:_.isBoolean(e.testMode)?e.testMode:!1,window:e.testWindow||window},this._lifecycleEventListeners=[],this._engagementEventListeners=[],this._metricsInstrumentations=[],this._loggers=[],window.Hymnal&&window.Hymnal.ads&&window.Hymnal.ads.push(this)}return e.cssClasses={viewed:"hymnal-ad-viewed"},e.prototype.getInfo=function(){return"==============================\nAd type:       "+(this.type||"(unknown)")+"\nAd id:         "+(this.id||"(unknown)")+"\nBrand:         "+(this.brand||"(unknown)")+"\nSlug:          "+this.getSlug()+"\nAd Unit ID:    "+this.adUnitID+"\nSite ID:       "+this.siteID+"\nNetwork:       "+this.network+"\nEntry Type:    "+this.entryType+"\nClick Through: "+this.clickThroughUrl+"\n-----\nHymnal SDK version: 0.2\n==============================\n"},e.prototype.addEngagementEventListener=function(t){this._engagementEventListeners.push(t)},e.prototype.addLifecycleEventListener=function(t){this._lifecycleEventListeners.push(t)},e.prototype.addMetricsInstrumentation=function(t){this.log("Adding metrics instrumentation: "+(t.getName()||"(no name)")),this._metricsInstrumentations.push(t),t.setAd(this)},e.prototype.addLogger=function(t){this.enable_log=!0,this.log("Call to deprecated function. Use 'ad.enable_log = true' to log to console.log (if it exists)")},e.prototype.requestMoatJavascript=function(t,e){this.log("Moat support is removed")},window.console=window.console||{log:function(){}},e.prototype.log=function(t){for(var e="",n=1;n<arguments.length;n++)e+=" "+argument[n];this.enable_log&&window.console.log("HYMNAL | "+this.getSlug()+" | ",t,e)},e.prototype.render=function(){if(this._triggerLifecycleEvent("initializing"),this._elementToReplace||(this._elementToReplace=this.findElement()),this._elementToReplace){var t=_.isString(this._elementToReplace)?$(this._elementToReplace).first():this._elementToReplace;this.getConfigurationFromDataAttributes(t),this.selectVariant(this.variantID),this.addClassesToHtmlElement(),this.replaceAdServerVariablesInDesignHtml();var e=$(this.content.html);if(t.replaceWith(e),this._element=e,this.content.css&&$('<style type="text/css" data-for-hymnal-ad="'+this.getSlug()+'">'+this.content.css+"</style>").insertAfter($("head").children().last()),this._designSetupFunction&&this._designSetupFunction(this.variantID),this.automatic_click_through){var n=this;$(this._element).find("#athena-click, .athena-click, #prelude-click, .prelude-click, #fishtank-click, .fishtank-click").click(function(t){n.clickThrough(),t.stopPropagation(),t.preventDefault()})}}this._triggerLifecycleEvent("render"),this._configureStandardEngagementDetection()},e.prototype.getConfigurationFromDataAttributes=function(t){var e=t.attr("data-hymnal-ad-config-click-through-url");e&&""!==$.trim(e)?(this.clickThroughUrl&&this.log("Overriding previous click-through URL: "+this.clickThroughUrl+"..."),this.clickThroughUrl=e,this.log("Using click-through URL from data-hymnal-ad-config-click-through-url: "+e)):this.log("No click-through URL found on data-hymnal-ad-config-click-through-url"),this.adUnitID=t.attr("data-hymnal-ad-unit-id"),this.siteID=t.attr("data-hymnal-site-id"),this.variantID=t.attr("data-hymnal-design-variant-id"),("undefined"==typeof this.variantID||"undefined"==typeof this.fields[this.variantID])&&(this.variantID=Object.keys(this.fields)[0]),this.network=t.attr("data-hymnal-network"),this.entryType=t.attr("data-hymnal-entry-type"),(this.getTestMode()||""===this.network)&&(this.network=this.guessNetworkFromURL()),this.adServerVariables.click_through_url=this.clickThroughUrl,this.adServerVariables.ad_unit_id=this.adUnitID,this.adServerVariables.site_id=this.siteID,this.adServerVariables.network=this.network,this.adServerVariables.entry_type=this.entryType},e.prototype.selectVariant=function(t){var e=(this.content.all_html[t]||"").trim(),n=(this.content.all_css[t]||"").trim();this.content.html=e.replace(/\\"/g,'"').replace(/\\'/g,"'").replace(/\\\//g,"/"),this.content.css=n.replace(/\\"/g,'"').replace(/\\'/g,"'").replace(/\\\//g,"/"),this.fields=this.fields[t]},e.prototype.guessNetworkFromURL=function(){for(var t=["verge","polygon","eater","racked","vox","curbed"],e=0;e<t.length;e++)if(location.host.indexOf(t[e])>-1)return t[e];return"sbn"},e.prototype.replaceAdServerVariablesInDesignHtml=function(){for(var t in this.adServerVariables){var e=new RegExp("\\$AD_SERVER\\["+t+"\\]","g");this.content.html=this.content.html.replace(e,this.adServerVariables[t])}},e.prototype.addClassesToHtmlElement=function(){for(var t="",e=["harmony-","hymnal-"],n=[this.network,this.entryType],i=0;i<n.length;i++)if("undefined"!=typeof n[i]&&n[i].length>0)for(var s=0;s<e.length;s++)t+=e[s]+n[i]+" ";this.log("adding classes to html "+t),$("html").addClass(t)},e.prototype.popUp=function(t){var e=this.getElement();if(e){var n=e.find(".hymnal-popup-message-container");0===n.length&&(n=$("<div>").addClass("hymnal-popup-message-container").css({position:"absolute",top:"0",left:"0","z-index":"1000"}).appendTo(e));var i=$("<span>").addClass("hymnal-popup-message").css({display:"none","border-radius":"5px","background-color":"white",color:"#333","float":"left",margin:"8px","margin-bottom":"0px",padding:"3px",clear:"both","user-select":"none",opacity:"0.75"}).text(t);n.append(i),i.fadeIn(),_.delay(function(){i.slideUp(500,function(){i.remove()})},4e3),_.delay(function(){0===n.find(".hymnal-popup-message").length&&n.remove()},5e3)}else window.console&&console.log&&console.log("Ad["+this.getSlug()+"] - "+t+" (pop up message not available)")},e.prototype.findElement=function(){var t=$('[data-hymnal-ad-slug="'+this.getSlug()+'"]');if(t.length>0?this.log("Element to replace found by data-hymnal-ad-slug: "+this.getSlug()):t=$('[data-hymnal-ad-id="'+this.id+'"]'),t.length>0)this.log("Element to replace found by data-hymnal-ad-id: "+this.id);else if(_.isString(this.type)){var e=this.type.toLowerCase();t=$('[data-hymnal-ad-type="'+e+'"]'),t.length>0?this.log("Element to replace found by data-hymnal-ad-type: "+e):(t=$('[data-hymnal-ad-type="fishtank"]'),t.length>0&&this.log("Element to replace found by data-hymnal-ad-type: fishtank"))}if(0===t.length&&_.isString(this.type)){var n=this.type.charAt(0).toUpperCase()+this.type.slice(1),i=$('[data-cb-ad-id="'+n+'"],[data-cb-ad-id="Athena"],.ad-interruptor').first();i.length>0&&(t=$("<div>").attr("data-hymnal-ad-id",this.id),i.append(t))}return t=t.length>0?t.first():null},e.prototype.getElement=function(){return this._element},e.prototype.getSlug=function(){if(this.slug)return this.slug;var t=[];return this.brand&&t.push((this.brand||"").toLowerCase().replace(" ","_")),this.id&&t.push(this.id),this.slug=t.join("_"),this.slug},e.prototype.getTestMode=function(){var t=this.settings.window;return t.Hymnal&&t.Hymnal.settings&&t.Hymnal.settings.testMode===!0?!0:this.settings.testMode},e.prototype.setTestMode=function(t){this.settings.testMode=t},e.prototype.engage=function(t){this.log("Engagement: "+t),this.getTestMode()?this.popUp("Engagement: "+t):_.each(this._engagementEventListeners,function(e){_.isFunction(e)&&e(t)})},e.prototype.clickThrough=function(){this.engage("click-through"),this.clickThroughUrl&&(this.getTestMode()?this.popUp("Open URL: "+this.clickThroughUrl):(this.log("Opening URL in new window: "+this.clickThroughUrl),this.settings.window.open(this.clickThroughUrl,"_blank")))},e.prototype._triggerLifecycleEvent=function(t){this.log("Lifecycle: "+t);var e=this;_.each(this._lifecycleEventListeners,function(n){n(t,e)})},e.prototype._configureStandardEngagementDetection=function(){var n=this.getElement(),i="scroll."+this.getSlug(),s=this,o=_.once(function(){s.engage("view"),n.addClass(e.cssClasses.viewed)});s.manual_view_impression&&(s.log("Suppressing automatic view setup"),o=function(){}),n&&n.length>0&&(t.util.inViewport(n)?o():$(window).on(i,_.throttle(function(){t.util.inViewport(n)&&(o(),$(window).off(i))},100)))},e}()}(HymnalLib),function(t){t.MetricsInstrumentation||!function(){t.MetricsInstrumentation=function(){function t(t){t=t||{},this._name=t.name,this._adProperties=t.adProperties,this._setupFunction=t.setupFunction,this._engagementEventListener=t.engagementEventListener,this._ad=null}return t.prototype.getName=function(){return this._name},t.prototype.setAd=function(t){var e=this;this._ad=t,_.isObject(this._adProperties)&&_.each(this._adProperties,function(t,n){e._ad.log(e._name+' adding property to Ad; key: "'+n+'", value: "'+t+'"'),e._ad[n]=t}),this._setupFunction&&this._ad.addLifecycleEventListener(function(t,n){"render"===t&&e._setupFunction(n)}),this._engagementEventListener&&this._ad.addEngagementEventListener(this._engagementEventListener)},t}()}()}(HymnalLib),function(t){t.DefaultEvents||!function(){t.DefaultEvents=function(){function t(t){return t=t||{},this._name=t.name,e}var e=function(t,e){$(document).triggerHandler("hymnal:"+t,{ad:e})};return t}()}()}(HymnalLib);
+
+      (function(Hymnal){
+        // On document ready
+        $(function() {
+          var ad = new Hymnal.Ad({
+            id: '4332',
+            slug: 'discover_discover_double_cash_back_slice_of_life_prelude_the_verge_copy_4332',
+            type: 'Athena',
+            campaign: 'discover_double_cash_back_332',
+            campaign_name: 'Double Cash Back',
+            brand: 'Discover',
+            design_template: 'Prelude (Regular)',
+            html: {"91ffcb604f3cc8419ba3a79a69abd2fd":""},
+            css: {"91ffcb604f3cc8419ba3a79a69abd2fd":"#hymnal-container{background:transparent url(http://cdn.hymnal.voxmedia.com/uploads/asset/file/5697/Discover_1400x510_DoubleAnniversary_static.jpg) repeat 0% 50%;background-size:cover;width:100%;position:relative;text-align:center;z-index:10;border-bottom:1px solid #ddd}#hymnal-container:before{content:\\'Advertisement\\';color:#666;text-transform:uppercase;font-size:11px;position:absolute;display:inline-block;top:0;right:0;padding:1% 1.5%;z-index:2;font-family:Helvetica, Arial, sans-serif}#hymnal-container #hymnal-prelude{background-size:contain;background-repeat:no-repeat;width:100%;max-width:1020px;height:80%;max-height:590px;padding-bottom:46%;overflow:hidden;margin:3% auto;text-align:left}#hymnal-container a{display:inline-block;position:absolute;top:0;left:0;right:0;bottom:0;cursor:pointer;z-index:4}#hymnal-container a:hover{cursor:pointer}#hymnal-container video{position:absolute;top:0;left:0;height:100%;width:100%;z-index:1;background:transparent}#hymnal-container #video-wrapper{z-index:-1;overflow:hidden}#hymnal-container #prelude-wrapper{position:relative;width:65.3%;margin:0 auto;pointer-events:none}#hymnal-container #prelude-wrapper:before{content:\\'\\';display:block;padding-top:55.7%}.harmony-polygon.prelude-running .m-site-nav__shelf{display:none}#hymnal-container{position:absolute;top:0}.prelude-running{margin-top:36.35% !important}"},
+            fields: {"91ffcb604f3cc8419ba3a79a69abd2fd":{"lrg_image":"http://cdn.hymnal.voxmedia.com/uploads/asset/file/5697/Discover_1400x510_DoubleAnniversary_static.jpg"}},
+            
+            // This is where the javascript for this ad is placed
+            designSetupFunction: function(variant) {
+              var all_variants = {"91ffcb604f3cc8419ba3a79a69abd2fd":"// TO EDIT HTML INSERT DO IT HERE\r\nvar HTMLmarkup = '<div id=\"hymnal-container\" class=\"prelude-holder\">' +\r\n                    '<a id=\"prelude-click\" class=\"athena-click\"></a>' +\r\n                    '<div id=\"video-wrapper\"></div>' +\r\n                    '<div id=\"prelude-wrapper\"></div>' +\r\n                  '</div>';\r\n\r\n//ad.enable_log = true;\r\nad.manual_moat_setup = true;\r\n\r\nif(Hymnal.util.UserAgentProfiler.isDesktop()) {\r\n\r\n  var interstitialMarkup = HTMLmarkup;\r\n  $('body').prepend(interstitialMarkup);\r\n  $('html').addClass('prelude-running');\r\n\r\n\r\n  // TODO: Before you do anything, check scrollTop and if it is > viewport height, don't even bother running\r\n\r\n  var hymnal = {\r\n    container : $('#hymnal-container'),\r\n    athena    : $('#hymnal-prelude'),\r\n    dismiss   : $('#hymnal-dismiss'),\r\n    target    : $('#hymnal-container .athena-click')\r\n  };\r\n}\r\n\r\n// Video Player\r\nvar $videoMP4 = \"http://cdn.hymnal.voxmedia.com/ads/slice_of_life/Discover_1400x510_DoubleAnniversary_SliceOfLife_v1_video.mp4\";\r\nvar $videoOGG = \"http://cdn.hymnal.voxmedia.com/ads/slice_of_life/Discover_1400x510_DoubleAnniversary_SliceOfLife_v1_video.oggvorbis.ogg\";\r\nvar $videoWebm = \"http://cdn.hymnal.voxmedia.com/ads/slice_of_life/Discover_1400x510_DoubleAnniversary_SliceOfLife_v1_video.webmhd.webm\";\r\n\r\nif (! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {\r\n  var videoMarkup = '<video autoplay=\"autoplay\" muted=\"true\" poster=\"https://www.dropbox.com/s/3dmtb1onzh010qd/transparent.png?dl=1\"><source src=' + $videoWebm + ' type=\"video/webm\" /><source src=' + $videoOGG + ' type=\"video/ogg\" /><source src='+ $videoMP4 +' type=\"video/mp4\" /></video>';\r\n  $('#video-wrapper').html(videoMarkup);\r\n}\r\n\r\n// Clickthrough\r\nhymnal.target.on('click', function(){\r\n  ad.clickThrough();\r\n});\r\n"};
+              eval(all_variants[variant]);
+            }
+          });
+
+
+          // This is a sort of event reflector, to make document level events from
+          // the Hymnal events.
+          ad.addLifecycleEventListener(new Hymnal.DefaultEvents());
+          ad.render();
+        });
+      })(HymnalLib);
+    })(jQuery);
+  }
+
+
+  if(!hymnalInDesignPreview){
+    document.addEventListener("DOMContentLoaded",moveToMainFrame);
+  }
+
+  if(hymnalInDesignPreview || !hymnalCanEscapeFrame){
+    if(document.readyState == "loading"){
+      document.addEventListener("DOMContentLoaded",executeHymnal);
+    } else {
+      executeHymnal();
+    }
+  }
+})();
+
+  </script>
+</div>
+
+<style>
+  #ad-container {
+    width: 1090px;
+    margin: 0 auto;
+  }
+</style>
+
+<script>
+  $(function() {
+    if (window['Hymnal'] && Hymnal.ads) {
+      _.each(Hymnal.ads, function(ad) {
+        ad.setTestMode(true);
+      });
+      window.parent.previewedAd = _.first(Hymnal.ads);
+    }
+  });
+
+  if (window.parent && window.parent.HymnalAdmin) {
+    window.parent.HymnalAdmin.editor.setErrorMessages(
+      {},
+      {}
+    );
+  }
+</script>

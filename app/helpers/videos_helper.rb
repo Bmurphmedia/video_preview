@@ -24,7 +24,28 @@ module VideosHelper
 		hls = base_url + domain + "/" + application + "/" + foreign_key + "/content.#{extension}?" + query 
 		return hls
 	end
+	def get_auto(url)
+		uri = URI(url)
+		path = uri.path
+		array = path.split(pattern='/',12)
 
+		base_url = "http://once.unicornmedia.com/now/od/auto/"
+
+		query = uri.query
+		extension = "once"
+		domain = array[6]
+		application = array[7]
+		foreign_key = array[8]
+		auto = base_url + domain + "/" + application + "/" + foreign_key + "/content.#{extension}?" + query
+
+		return auto
+
+	end
+	def ooyala_mp4(id)
+
+		return "http://ak.c.ooyala.com/#{@video.ooyala_id}/DOcJ-FxaFrRg4gtDEwOmk2OjBrO6qGv_"
+
+	end
 
 
 	# def get_youtube_id(url)

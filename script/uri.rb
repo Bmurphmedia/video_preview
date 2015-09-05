@@ -18,7 +18,27 @@ def get_hls(url)
 
 end
 
+def get_auto(url)
+	uri = URI(url)
+	path = uri.path
+	array = path.split(pattern='/',12)
+
+	base_url = "http://once.unicornmedia.com/now/od/auto/"
+
+	query = uri.query
+	extension = "once"
+	domain = array[6]
+	application = array[7]
+	foreign_key = array[8]
+	auto = base_url + domain + "/" + application + "/" + foreign_key + "/content.#{extension}?" + query
+
+	puts auto
+
+end
+puts "HLS:"
 get_hls("http://onceux.unicornmedia.com/now/ads/vmap/od/auto/0c2129c5-42b8-49e0-aa4c-f560c7bc0ba7/af7e1dc1-2f79-49f6-9ebd-9ef0559a1ed5/6720000004/content.once?&UMPTPARAMcmsid=3424&UMPTPARAMvid=1yb3J0dTrZtwE7qk38reXKV9K6LUo_i1&UMPTPARAMplayer=brightcove")
+puts "Auto:"
+get_auto("http://onceux.unicornmedia.com/now/ads/vmap/od/auto/0c2129c5-42b8-49e0-aa4c-f560c7bc0ba7/af7e1dc1-2f79-49f6-9ebd-9ef0559a1ed5/6720000004/content.once?&UMPTPARAMcmsid=3424&UMPTPARAMvid=1yb3J0dTrZtwE7qk38reXKV9K6LUo_i1&UMPTPARAMplayer=brightcove")
 
 
 # url ="http://onceux.unicornmedia.com/now/ads/vmap/od/auto/0c2129c5-42b8-49e0-aa4c-f560c7bc0ba7/af7e1dc1-2f79-49f6-9ebd-9ef0559a1ed5/6720000004/content.once?&UMPTPARAMcmsid=3424&UMPTPARAMvid=1yb3J0dTrZtwE7qk38reXKV9K6LUo_i1&UMPTPARAMplayer=brightcove"
