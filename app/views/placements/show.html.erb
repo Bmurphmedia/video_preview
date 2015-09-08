@@ -39,5 +39,13 @@
 		<%@video.once_id = @embed_codes["BrightcoveAsset"]%>
 		<%= render "videos/perform_cine1"%>
 	<%end%>
+	<%if @placement.option == 7 %>
+		<%@video.once_id = @embed_codes["BrightcoveAsset"]%>
+		<%= render "videos/custom_html5_1"%>
+	<%end%>
+	<%if @placement.option == 8 %>
+		<%@video.once_id = @embed_codes["BrightcoveAsset"]%>
+		<%= render "videos/ted"%>
+	<%end%>
 
 </div>

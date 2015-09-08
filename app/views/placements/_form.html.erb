@@ -3,7 +3,7 @@
 
     <%=simple_form_for [@page, @placement], html: { class: 'form-horizontal' } do |form|%>
       <%= form.association :video, {label_method: :id} %>
-      <%= form.input :option, collection: 1..6 %>
+      <%= form.input :option, collection: 1..8 %>
       <%= form.submit %>
 
     <%end%>
