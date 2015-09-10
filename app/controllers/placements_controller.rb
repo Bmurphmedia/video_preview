@@ -33,8 +33,6 @@ class PlacementsController < ApplicationController
 		@placement = Placement.find(params[:id])
 		@embed_codes = {}
 		
-
-
 		@video = Video.find(@placement.video_id)
 
 		@video.volume_hash = get_volume_hash(@video.volume_id)
@@ -45,8 +43,9 @@ class PlacementsController < ApplicationController
 			@embed_codes["#{type}"] = asset["embed_code"]
 
 		end
-
-
+		@video.once_id = @embed_codes["BrightcoveAsset"]
+		@video.ooyala_id = @embed_codes["OoyalaAsset"]
+		@video.youtube_id = @embed_codes["YoutubeAsset"]
 	end
 
 

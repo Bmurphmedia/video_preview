@@ -2,7 +2,8 @@
 <script type="text/javascript">
 var playerInstance = jwplayer("myElement");
 playerInstance.setup({
-    file: "http://assets.volume.voxmedia.com/production/1be7c11165b69174d7f84f05d799a0d3/VRG_VEV_063_supercut_v4.mp4",
+    file: "<%=get_auto(@video.once_id)%>",
+    type: 'mp4',
     image: "<%=@video.image_url%>",
     width: 640,
     height: 360,
@@ -10,5 +11,7 @@ playerInstance.setup({
     description: 'A video with a basic title and description!'
 });
 </script>
+<!-- Temporary asset scratch 
 
 http://assets.volume.voxmedia.com/production/1be7c11165b69174d7f84f05d799a0d3/VRG_VEV_063_supercut_v4.mp4
+-->
